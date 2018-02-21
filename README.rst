@@ -1,5 +1,8 @@
-pkcs11 Overlay
-==============
+NSCE Overlay
+============
+
+This is the Naval Computational Science and Engineering overlay, a Gentoo-compatible
+ebuild overlay.
 
 This overlay currently contains the ``pam-pkcs11`` ebuild, which is used for adding
 smartcard compatibility to PAM on Linux systems.
