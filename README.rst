@@ -1,4 +1,4 @@
-NSCE Overlay
+NCSE Overlay
 ============
 
 This is the Naval Computational Science and Engineering overlay, a Gentoo-compatible
