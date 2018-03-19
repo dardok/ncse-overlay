@@ -98,7 +98,7 @@ src_configure() {
        -DUSE_SYSTEM_CLBLAST=ON
        -DOPENCL_BLAS_LIBRARY=CLBlast
        -DCUDA_COMPUTE_DETECT=OFF
-       -DCOMPUTES_DETECTED_LIST=$COMPUTES_LIST
+       -DCOMPUTES_DETECTED_LIST=${COMPUTES_LIST::-1}
     )
 
     cmake-utils_src_configure
