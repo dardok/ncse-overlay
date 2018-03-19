@@ -56,9 +56,8 @@ src_configure() {
        $(cmake-utils_use_build test TEST)
        -DUSE_SYSTEM_CLBLAST=ON
        -DOPENCL_BLAS_LIBRARY=CLBlast
+	   -DCUDA_COMPUTE_DETECT=OFF
     )
-
-    addread "/dev/nvidia-uvm"
 
     cmake-utils_src_configure
 }
