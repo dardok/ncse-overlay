@@ -21,14 +21,14 @@ CUDA_COMPUTES="20 30 32 35 37 50 52 53 60 61 62 70"
 
 IUSE_CUDA_COMPUTES=""
 for compute in $CUDA_COMPUTES ; do
-	IUSE_CUDA_COMPUTES="cuda_compute_${compute} ${IUSE_CUDA_COMPUTES}"
+    IUSE_CUDA_COMPUTES="cuda_compute_${compute} ${IUSE_CUDA_COMPUTES}"
 done
 
 IUSE="debug doc +unified +cpu cuda ${IUSE_CUDA_COMPUTES} lapack opencl examples graphics nonfree test"
 
 REQUIRED_USE="cuda? ( || ( ${IUSE_CUDA_COMPUTES} ) )"
 for compute in $CUDA_COMPUTES ; do
-	REQUIRED_USE="${REQUIRED_USE} cuda_compute_${compute}? ( cuda )"
+    REQUIRED_USE="${REQUIRED_USE} cuda_compute_${compute}? ( cuda )"
 done
 
 RDEPEND="
@@ -58,7 +58,7 @@ src_configure() {
     OPENCL=$(eselect opencl show 2> /dev/null || echo "none")
     if use opencl && [[ ${OPENCL} == nvidia ]] ; then
         eerror "ArrayFire OpenCL will not build against NVidia SDK, please eselect a different OpenCL."
-        eerror "NVidia OpenCL *will* work at runtime."
+        eerror "NVidia OpenCL *should* work at runtime."
         die "NVidia OpenCL not supported at build time"
     fi
 
@@ -78,13 +78,13 @@ src_configure() {
 
     if use cuda ; then
         COMPUTES_LIST=""
-		for compute in ${CUDA_COMPUTES} ; do
+        for compute in ${CUDA_COMPUTES} ; do
             if use cuda_compute_${compute} ; then
                 COMPUTES_LIST="${compute};$COMPUTES_LIST"
-			fi
-		done
+            fi
+        done
 
-		[ -z "${COMPUTES_LIST}" ] && die "No CUDA computes specified?!"
+        [ -z "${COMPUTES_LIST}" ] && die "No CUDA computes specified?!"
 
         mycmakeargs+=(
             -DCUDA_COMPUTE_DETECT=OFF
