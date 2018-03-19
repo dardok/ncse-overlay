@@ -17,35 +17,19 @@ LICENSE="BSD-with-attribution"
 SLOT="0"
 KEYWORDS="amd64"
 
-IUSE_CUDA_COMPUTES="
-    cuda_compute_20
-    +cuda_compute_30
-    cuda_compute_32
-    cuda_compute_35
-    cuda_compute_37
-    +cuda_compute_50
-    cuda_compute_52
-    cuda_compute_53
-    cuda_compute_60
-    cuda_compute_61
-    cuda_compute_62
-    cuda_compute_70"
+CUDA_COMPUTES="20 30 32 35 37 50 52 53 60 61 62 70"
+
+IUSE_CUDA_COMPUTES=""
+for compute in $CUDA_COMPUTES ; do
+	IUSE_CUDA_COMPUTES="cuda_compute_${compute} ${IUSE_CUDA_COMPUTES}"
+done
 
 IUSE="debug doc +unified +cpu cuda ${IUSE_CUDA_COMPUTES} lapack opencl examples graphics nonfree test"
 
-REQUIRED_USE="cuda_compute_20? ( cuda )
-    cuda_compute_30? ( cuda )
-    cuda_compute_32? ( cuda )
-    cuda_compute_35? ( cuda )
-    cuda_compute_37? ( cuda )
-    cuda_compute_50? ( cuda )
-    cuda_compute_52? ( cuda )
-    cuda_compute_53? ( cuda )
-    cuda_compute_60? ( cuda )
-    cuda_compute_61? ( cuda )
-    cuda_compute_62? ( cuda )
-    cuda_compute_70? ( cuda )
-    cuda? ( || ( cuda_compute_20 cuda_compute_30 cuda_compute_32 cuda_compute_35 cuda_compute_37 cuda_compute_50 cuda_compute_52 cuda_compute_53 cuda_compute_60 cuda_compute_61 cuda_compute_62 cuda_compute_70 ) )"
+REQUIRED_USE="cuda? ( || ( ${IUSE_CUDA_COMPUTES} ) )"
+for compute in $CUDA_COMPUTES ; do
+	REQUIRED_USE="${REQUIRED_USE} cuda_compute_${compute}? ( cuda )"
+done
 
 RDEPEND="
     media-libs/freeimage
@@ -71,19 +55,12 @@ PATCHES=(
 )
 
 src_configure() {
-    COMPUTES_LIST=""
-    if use cuda_compute_20 ; then COMPUTES_LIST="20;$COMPUTES_LIST" ; fi
-    if use cuda_compute_30 ; then COMPUTES_LIST="30;$COMPUTES_LIST" ; fi
-    if use cuda_compute_32 ; then COMPUTES_LIST="32;$COMPUTES_LIST" ; fi
-    if use cuda_compute_35 ; then COMPUTES_LIST="35;$COMPUTES_LIST" ; fi
-    if use cuda_compute_37 ; then COMPUTES_LIST="37;$COMPUTES_LIST" ; fi
-    if use cuda_compute_50 ; then COMPUTES_LIST="50;$COMPUTES_LIST" ; fi
-    if use cuda_compute_52 ; then COMPUTES_LIST="52;$COMPUTES_LIST" ; fi
-    if use cuda_compute_53 ; then COMPUTES_LIST="53;$COMPUTES_LIST" ; fi
-    if use cuda_compute_60 ; then COMPUTES_LIST="60;$COMPUTES_LIST" ; fi
-    if use cuda_compute_61 ; then COMPUTES_LIST="61;$COMPUTES_LIST" ; fi
-    if use cuda_compute_62 ; then COMPUTES_LIST="62;$COMPUTES_LIST" ; fi
-    if use cuda_compute_70 ; then COMPUTES_LIST="70;$COMPUTES_LIST" ; fi
+    OPENCL=$(eselect opencl show 2> /dev/null || echo "none")
+    if use opencl && [[ ${OPENCL} == nvidia ]] ; then
+        eerror "ArrayFire OpenCL will not build against NVidia SDK, please eselect a different OpenCL."
+        eerror "NVidia OpenCL *will* work at runtime."
+        die "NVidia OpenCL not supported at build time"
+    fi
 
     local mycmakeargs=(
        -DBUILD_UNIFIED="$(usex unified)"
@@ -97,9 +74,23 @@ src_configure() {
        -DBUILD_DOCS="$(usex doc)"
        -DUSE_SYSTEM_CLBLAST=ON
        -DOPENCL_BLAS_LIBRARY=CLBlast
-       -DCUDA_COMPUTE_DETECT=OFF
-       -DCOMPUTES_DETECTED_LIST=${COMPUTES_LIST::-1}
     )
+
+    if use cuda ; then
+        COMPUTES_LIST=""
+		for compute in ${CUDA_COMPUTES} ; do
+            if use cuda_compute_${compute} ; then
+                COMPUTES_LIST="${compute};$COMPUTES_LIST"
+			fi
+		done
+
+		[ -z "${COMPUTES_LIST}" ] && die "No CUDA computes specified?!"
+
+        mycmakeargs+=(
+            -DCUDA_COMPUTE_DETECT=OFF
+            -DCOMPUTES_DETECTED_LIST=${COMPUTES_LIST::-1}
+        )
+    fi
 
     cmake-utils_src_configure
 }
