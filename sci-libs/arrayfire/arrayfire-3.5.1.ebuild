@@ -86,15 +86,15 @@ src_configure() {
     if has cuda_compute_70 ${IUSE//+} ; then COMPUTES_LIST="70;$COMPUTES_LIST" ; fi
 
     local mycmakeargs=(
-       $(cmake-utils_use_build unified UNIFIED)
-       $(cmake-utils_use_build cpu CPU)
-       $(cmake-utils_use_build cuda CUDA)
-       $(cmake-utils_use_build opencl OPENCL)
-       $(cmake-utils_use_build graphics GRAPHICS)
-       $(cmake-utils_use_build nonfree NONFREE)
-       $(cmake-utils_use_build examples EXAMPLES)
-       $(cmake-utils_use_build test TEST)
-       $(cmake-utils_use_build doc DOCS)
+       -DBUILD_UNIFIED="$(usex unified)"
+       -DBUILD_CPU="$(usex cpu)"
+       -DBUILD_CUDA="$(usex cuda)"
+       -DBUILD_OPENCL="$(usex opencl)"
+       -DBUILD_GRAPHICS="$(usex graphics)"
+       -DBUILD_NONFREE="$(usex nonfree)"
+       -DBUILD_EXAMPLES="$(usex examples)"
+       -DBUILD_TEST="$(usex test)"
+       -DBUILD_DOCS="$(usex doc)"
        -DUSE_SYSTEM_CLBLAST=ON
        -DOPENCL_BLAS_LIBRARY=CLBlast
        -DCUDA_COMPUTE_DETECT=OFF
