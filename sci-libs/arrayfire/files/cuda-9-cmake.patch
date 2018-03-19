@@ -1,7 +1,7 @@
 diff -u -r -N a/src/backend/cuda/CMakeLists.txt b/src/backend/cuda/CMakeLists.txt
---- a/src/backend/cuda/CMakeLists.txt	2017-12-11 13:53:27.743212587 -0500
-+++ b/src/backend/cuda/CMakeLists.txt	2017-12-11 13:58:04.564880588 -0500
-@@ -41,7 +41,10 @@
+--- a/src/backend/cuda/CMakeLists.txt	2017-10-03 17:27:10.000000000 -0400
++++ b/src/backend/cuda/CMakeLists.txt	2018-03-19 07:31:42.689951170 -0400
+@@ -41,12 +41,15 @@
      MESSAGE(STATUS "You can use -DCOMPUTES_DETECTED_LIST=\"AB;XY\" (semicolon separated list of CUDA Compute versions to enable the specified computes")
      MESSAGE(STATUS "Individual compute versions flags are also available under CMake Advance options")
      LIST(APPEND COMPUTES_DETECTED_LIST "30" "50")
@@ -12,7 +12,14 @@ diff -u -r -N a/src/backend/cuda/CMakeLists.txt b/src/backend/cuda/CMakeLists.tx
 +    ELSEIF(${CUDA_VERSION_MAJOR} GREATER 7) # Enable 60 only if CUDA 8 or greater
          MESSAGE(STATUS "No computes detected. Fall back to 30, 50, 60")
          LIST(APPEND COMPUTES_DETECTED_LIST "60")
-     ELSE(${CUDA_VERSION_MAJOR} GREATER 7)
+-    ELSE(${CUDA_VERSION_MAJOR} GREATER 7)
++    ELSE()
+         LIST(APPEND COMPUTES_DETECTED_LIST "20")
+-    ENDIF(${CUDA_VERSION_MAJOR} GREATER 7)
++    ENDIF()
+ ENDIF()
+ 
+ LIST(LENGTH COMPUTES_DETECTED_LIST COMPUTES_LEN)
 @@ -65,7 +68,7 @@
  ENDMACRO(SET_COMPUTE)
  

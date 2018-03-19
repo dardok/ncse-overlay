@@ -58,7 +58,7 @@ src_configure() {
        -DOPENCL_BLAS_LIBRARY=CLBlast
     )
 
-	addread /dev/nvidia-uvm
+    addread "/dev/nvidia-uvm"
 
     cmake-utils_src_configure
 }
