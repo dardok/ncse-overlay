@@ -72,18 +72,18 @@ PATCHES=(
 
 src_configure() {
     COMPUTES_LIST=""
-    if has cuda_compute_20 ${IUSE//+} ; then COMPUTES_LIST="20;$COMPUTES_LIST" ; fi
-    if has cuda_compute_30 ${IUSE//+} ; then COMPUTES_LIST="30;$COMPUTES_LIST" ; fi
-    if has cuda_compute_32 ${IUSE//+} ; then COMPUTES_LIST="32;$COMPUTES_LIST" ; fi
-    if has cuda_compute_35 ${IUSE//+} ; then COMPUTES_LIST="35;$COMPUTES_LIST" ; fi
-    if has cuda_compute_37 ${IUSE//+} ; then COMPUTES_LIST="37;$COMPUTES_LIST" ; fi
-    if has cuda_compute_50 ${IUSE//+} ; then COMPUTES_LIST="50;$COMPUTES_LIST" ; fi
-    if has cuda_compute_52 ${IUSE//+} ; then COMPUTES_LIST="52;$COMPUTES_LIST" ; fi
-    if has cuda_compute_53 ${IUSE//+} ; then COMPUTES_LIST="53;$COMPUTES_LIST" ; fi
-    if has cuda_compute_60 ${IUSE//+} ; then COMPUTES_LIST="60;$COMPUTES_LIST" ; fi
-    if has cuda_compute_61 ${IUSE//+} ; then COMPUTES_LIST="61;$COMPUTES_LIST" ; fi
-    if has cuda_compute_62 ${IUSE//+} ; then COMPUTES_LIST="62;$COMPUTES_LIST" ; fi
-    if has cuda_compute_70 ${IUSE//+} ; then COMPUTES_LIST="70;$COMPUTES_LIST" ; fi
+    if use cuda_compute_20 ; then COMPUTES_LIST="20;$COMPUTES_LIST" ; fi
+    if use cuda_compute_30 ; then COMPUTES_LIST="30;$COMPUTES_LIST" ; fi
+    if use cuda_compute_32 ; then COMPUTES_LIST="32;$COMPUTES_LIST" ; fi
+    if use cuda_compute_35 ; then COMPUTES_LIST="35;$COMPUTES_LIST" ; fi
+    if use cuda_compute_37 ; then COMPUTES_LIST="37;$COMPUTES_LIST" ; fi
+    if use cuda_compute_50 ; then COMPUTES_LIST="50;$COMPUTES_LIST" ; fi
+    if use cuda_compute_52 ; then COMPUTES_LIST="52;$COMPUTES_LIST" ; fi
+    if use cuda_compute_53 ; then COMPUTES_LIST="53;$COMPUTES_LIST" ; fi
+    if use cuda_compute_60 ; then COMPUTES_LIST="60;$COMPUTES_LIST" ; fi
+    if use cuda_compute_61 ; then COMPUTES_LIST="61;$COMPUTES_LIST" ; fi
+    if use cuda_compute_62 ; then COMPUTES_LIST="62;$COMPUTES_LIST" ; fi
+    if use cuda_compute_70 ; then COMPUTES_LIST="70;$COMPUTES_LIST" ; fi
 
     local mycmakeargs=(
        -DBUILD_UNIFIED="$(usex unified)"
