@@ -8,7 +8,6 @@ THEMES_RELEASE=0.5.2
 
 DESCRIPTION="Emerald Window Decorator"
 HOMEPAGE="http://www.compiz.org/"
-SRC_URI="http://releases.compiz.org/${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -31,26 +30,36 @@ DEPEND="${RDEPEND}
 
 DOCS=( AUTHORS ChangeLog INSTALL NEWS README TODO )
 
+TARBALL_PV=${PV}
+GITHUB_REPO="emerald"
+GITHUB_USER="compiz-reloaded"
+# referencing last commit from Dec 7, 2017:
+GITHUB_TAG="7adffbe"
+SRC_URI="https://www.github.com/${GITHUB_USER}/${GITHUB_REPO}/tarball/${GITHUB_TAG} -> ${PN}-${GITHUB_TAG}.tar.gz"
+
+src_unpack() {
+	unpack ${A}
+	mv "${WORKDIR}/${GITHUB_USER}-${GITHUB_REPO}"-??????? "${S}" || die
+}
+
 src_prepare() {
 	# Fix pkg-config file pollution wrt #380197
-	epatch "${FILESDIR}"/${P}-pkgconfig-pollution.patch
+	#epatch "${FILESDIR}"/${P}-pkgconfig-pollution.patch
 	# fix build with gtk+-2.22 - bug 341143
-	sed -i -e '/#define G[DT]K_DISABLE_DEPRECATED/s:^://:' \
-		include/emerald.h || die
+	#sed -i -e '/#define G[DT]K_DISABLE_DEPRECATED/s:^://:' \
+	#	include/emerald.h || die
 	# Fix underlinking
+	./autogen.sh
 	append-libs -ldl -lm
 
-	epatch_user
+	#epatch_user
 }
 
 src_configure() {
-	econf \
-		--disable-static \
-		--enable-fast-install \
-		--disable-mime-update
+	econf --disable-mime-update || die "econf failed"
 }
 
 src_install() {
-	default
-	prune_libtool_files
+	emake DESTDIR="${D}" install || die "emake install failed"
 }
+
