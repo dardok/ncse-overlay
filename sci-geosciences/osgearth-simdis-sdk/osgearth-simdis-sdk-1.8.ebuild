@@ -6,7 +6,7 @@ DESCRIPTION="Dynamic map generation toolkit for OpenSceneGraph"
 HOMEPAGE="http://osgearth.org/"
 
 SRC_URI="https://github.com/gwaldron/osgearth/archive/${P}.tar.gz"
-S=${WORKDIR}/${PN}-${P}
+S=${WORKDIR}/osgearth-${P}
 
 LICENSE="LGPL-2+"
 SLOT="0"
