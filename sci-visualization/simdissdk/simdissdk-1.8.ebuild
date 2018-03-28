@@ -23,11 +23,10 @@ RDEPEND="
     dev-db/sqlite:3
     protobuf? ( dev-libs/protobuf )
     >=dev-games/openscenegraph-3.5[osgapps]
-    >=sci-geosciences/osgearth-2.8[qt5]"
+    =sci-geosciences/osgearth-simdis-sdk-1.8[qt5]"
 
 PATCHES=(
     "${FILESDIR}/sqlite-headers.patch"
-    "${FILESDIR}/osgearth-devel.patch"
 )
 
 src_configure() {
