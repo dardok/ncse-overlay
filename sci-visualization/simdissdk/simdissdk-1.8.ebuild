@@ -51,6 +51,7 @@ src_configure() {
         -DOSGSHADOW_LIBRARY_RELEASE_NAME=/usr/lib/libosgShadow.so
         -DOSGSIM_LIBRARY_RELEASE_NAME=/usr/lib/libosgSim.so
         -DOSGTERRAIN_LIBRARY_RELEASE_NAME=/usr/lib/libosgTerrain.so
+		-DOSGTEXT_LIBRARY_RELEASE_NAME=/usr/lib/libosgText.so
         -DOSGUTIL_LIBRARY_RELEASE_NAME=/usr/lib/libosgUtil.so
         -DOSGVIEWER_LIBRARY_RELEASE_NAME=/usr/lib/libosgViewer.so
         -DOSGVOLUME_LIBRARY_RELEASE_NAME=/usr/lib/libosgVolume.so
