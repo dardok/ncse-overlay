@@ -1,0 +1,24 @@
+diff -u -r -N a/Plugins/OSGEarthDBDriver/include/DBTileSource.h b/Plugins/OSGEarthDBDriver/include/DBTileSource.h
+--- a/Plugins/OSGEarthDBDriver/include/DBTileSource.h	2018-03-28 13:31:42.641329762 -0400
++++ b/Plugins/OSGEarthDBDriver/include/DBTileSource.h	2018-03-28 13:31:56.146443440 -0400
+@@ -27,7 +27,7 @@
+ #include "simCore/Time/Utils.h"
+ #include "simVis/DBOptions.h"
+ #include "simVis/osgEarthVersion.h"
+-#include "sqlite/sqlite3.h"
++#include "sqlite3.h"
+ #include "SQLiteDataBaseReadUtil.h"
+ #include "QSPosXYExtents.h"
+ 
+diff -u -r -N a/Plugins/OSGEarthDBDriver/include/SQLiteDataBaseReadUtil.h b/Plugins/OSGEarthDBDriver/include/SQLiteDataBaseReadUtil.h
+--- a/Plugins/OSGEarthDBDriver/include/SQLiteDataBaseReadUtil.h	2018-03-28 13:31:42.642329770 -0400
++++ b/Plugins/OSGEarthDBDriver/include/SQLiteDataBaseReadUtil.h	2018-03-28 13:32:08.618548421 -0400
+@@ -24,7 +24,7 @@
+ #define SQLITE_DATABASE_READ_UTIL_H
+ 
+ #include <string>
+-#include "sqlite/sqlite3.h"
++#include "sqlite3.h"
+ #include "simCore/Time/TimeClass.h"
+ 
+ #ifndef USE_SIMDIS_SDK
