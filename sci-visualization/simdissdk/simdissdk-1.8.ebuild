@@ -27,6 +27,7 @@ RDEPEND="
 
 PATCHES=(
     "${FILESDIR}/sqlite-headers.patch"
+    "${FILESDIR}/osgearth-devel.patch"
 )
 
 src_configure() {
