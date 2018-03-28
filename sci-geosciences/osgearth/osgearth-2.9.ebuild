@@ -36,7 +36,7 @@ RDEPEND="
         dev-qt/qtwidgets:5
         >=dev-games/openscenegraph-qt-3.5
     )
-    server? ( dev-libs/poco[net util] )"
+    server? ( dev-libs/poco[net,util] )"
 
 src_configure() {
     local mycmakeargs=(
