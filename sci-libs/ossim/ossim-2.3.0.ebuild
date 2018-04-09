@@ -11,7 +11,7 @@ else
     RELEASE="Gasparilla"
     SRC_URI="https://github.com/ossimlabs/ossim/archive/${RELEASE}-${PV}.tar.gz -> ${P}.tar.gz"
     S=${WORKDIR}/${PN}-${RELEASE}-${PV}
-	KEYWORDS="~amd64 ~x86"
+    KEYWORDS="~amd64 ~x86"
 fi
 
 LICENSE="MIT"

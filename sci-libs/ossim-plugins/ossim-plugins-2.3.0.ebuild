@@ -11,7 +11,7 @@ else
     RELEASE="Gasparilla"
     SRC_URI="https://github.com/ossimlabs/ossim-plugins/archive/${RELEASE}-${PV}.tar.gz -> ${P}.tar.gz"
     S=${WORKDIR}/${PN}-${RELEASE}-${PV}
-	KEYWORDS="~amd64 ~x86"
+    KEYWORDS="~amd64 ~x86"
 fi
 
 LICENSE="MIT"
@@ -24,21 +24,21 @@ RDEPEND="
     atp? ( >=media-libs/opencv-3.2[contrib,contrib_xfeatures2d] )
     fftw? ( sci-libs/fftw:3.0 )
     gdal? ( >=sci-libs/gdal-2.2 )
-	geopdf? ( app-text/podofo )
-	kml? ( sys-libs/zlib[minizip] )
-	opencv? ( >=media-libs/opencv-3.2 )
+    geopdf? ( app-text/podofo )
+    kml? ( sys-libs/zlib[minizip] )
+    opencv? ( >=media-libs/opencv-3.2 )
     png? (
         media-libs/libpng:0
         media-libs/tiff:0
     )
     jpeg2k? ( media-libs/openjpeg:2 )
-	potrace? ( media-gfx/potrace )
+    potrace? ( media-gfx/potrace )
     sqlite? (
         dev-db/sqlite:3
         media-libs/libpng:0
         virtual/jpeg:62
     )
-	registration? ( media-libs/opencv )
+    registration? ( media-libs/opencv )
     web? (
         net-misc/curl
     )
@@ -49,13 +49,13 @@ PATCHES=(
 )
 
 src_configure() {
-	BUILD_KAKADU_PLUGIN=OFF
-	if [ ! -z "$KAKADU_ROOT_SRC" ] && [ ! -z "$KAKADU_AUX_LIB" ] && [ ! -z "$KAKADU_LIB" ] ; then
-		ln -sfn $KAKADU_ROOT_SRC $S/kakadu/KAKADU_ROOT_SRC
-		ln -sfn $KAKADU_AUX_LIB $S/kakadu/KAKADU_AUX_LIB
-		ln -sfn $KAKADU_LIB $S/kakadu/KAKADU_LIB
-		BUILD_KAKADU_PLUGIN=ON
-	fi
+    BUILD_KAKADU_PLUGIN=OFF
+    if [ ! -z "$KAKADU_ROOT_SRC" ] && [ ! -z "$KAKADU_AUX_LIB" ] && [ ! -z "$KAKADU_LIB" ] ; then
+        ln -sfn $KAKADU_ROOT_SRC $S/kakadu/KAKADU_ROOT_SRC
+        ln -sfn $KAKADU_AUX_LIB $S/kakadu/KAKADU_AUX_LIB
+        ln -sfn $KAKADU_LIB $S/kakadu/KAKADU_LIB
+        BUILD_KAKADU_PLUGIN=ON
+    fi
 
     local mycmakeargs=(
         -DBUILD_ATP_PLUGIN=$(usex atp ON OFF)
