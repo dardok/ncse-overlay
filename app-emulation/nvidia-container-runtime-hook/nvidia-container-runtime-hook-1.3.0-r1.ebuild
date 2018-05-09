@@ -17,7 +17,7 @@ LICENSE="NVIDIA-r2"
 SLOT="0"
 
 RDEPEND="
-    app-emulation/nvidia-container-runtime
+    app-emulation/libnvidia-container
 "
 
 src_compile() {
