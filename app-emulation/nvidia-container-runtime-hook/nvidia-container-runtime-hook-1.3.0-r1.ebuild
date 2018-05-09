@@ -7,7 +7,7 @@ EGO_PN="github.com/NVIDIA/nvidia-container-runtime"
 MY_PVR="${PVR/_/-}"
 EGIT_COMMIT="v${MY_PVR/r/}"
 SRC_URI="https://${EGO_PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
-KEYWORDS="~amd64 ~arm ~ppc64"
+KEYWORDS="~amd64"
 inherit golang-build golang-vcs-snapshot
 
 DESCRIPTION="nvidia custom pre-start hook to all containers"
@@ -15,6 +15,10 @@ HOMEPAGE="https://github.com/NVIDIA/nvidia-container-runtime"
 
 LICENSE="NVIDIA-r2"
 SLOT="0"
+
+RDEPEND="
+    app-emulation/nvidia-container-runtime
+"
 
 src_compile() {
 	pushd src/${EGO_PN}/hook/nvidia-container-runtime-hook 2> /dev/null || die

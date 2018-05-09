@@ -9,7 +9,7 @@ if [[ ${PV} != *9999* ]]; then
     [[ ${PV} =~ ([0-9]+.[0-9]+.[0-9]+)_([a-z]+)([0-9]+) ]] && \
         EGIT_COMMIT="v"${BASH_REMATCH[1]}-${BASH_REMATCH[2]}.${BASH_REMATCH[3]}"" || \
         die "Couldn't parse version"
-    KEYWORDS="~amd64"
+    KEYWORDS="~amd64 ~x86"
 fi
 
 LICENSE="NVIDIA-r2"
