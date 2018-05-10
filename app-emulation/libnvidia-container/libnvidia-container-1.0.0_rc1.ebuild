@@ -100,10 +100,10 @@ src_install() {
     use system-libelf && LIB_LDLIBS_SHARED+=" -lelf"
 #    use tirpc && LIB_LDLIBS_SHARED+=" -ltirpc"
     use seccomp && LIB_LDLIBS_SHARED+=" -lseccomp"
-	prefix="${EPREFIX}/usr" \
-	exec_prefix="\${prefix}" \
-	libdir="${EPREFIX}/usr/$(get_libdir)" \
-	includedir="\${prefix}/include" \
+    prefix="${EPREFIX}/usr" \
+    exec_prefix="\${prefix}" \
+    libdir="${EPREFIX}/usr/$(get_libdir)" \
+    includedir="\${prefix}/include" \
         "${S}"/mk/${PN}.pc.in "${PV}" "${LIB_LDLIBS_SHARED}" > "${D}"/usr/$(get_libdir)/pkgconfig/${PN}.pc
     
     use tools && dobin nvidia-container-cli

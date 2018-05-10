@@ -21,18 +21,18 @@ RDEPEND="
 "
 
 src_compile() {
-	pushd src/${EGO_PN}/hook/nvidia-container-runtime-hook 2> /dev/null || die
-	go get -d
+    pushd src/${EGO_PN}/hook/nvidia-container-runtime-hook 2> /dev/null || die
+    go get -d
     go build
-	popd || die
+    popd || die
 }
 
 src_install() {
-	pushd src/${EGO_PN} 2> /dev/null || die
-	dobin hook/nvidia-container-runtime-hook/nvidia-container-runtime-hook
+    pushd src/${EGO_PN} 2> /dev/null || die
+    dobin hook/nvidia-container-runtime-hook/nvidia-container-runtime-hook
     dodoc LICENSE
-	dodir /etc/nvidia-container-runtime
+    dodir /etc/nvidia-container-runtime
     insinto /etc/nvidia-container-runtime
-	newins hook/config.toml.amzn config.toml
-	popd || die
+    newins hook/config.toml.amzn config.toml
+    popd || die
 }
