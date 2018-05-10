@@ -1,36 +1,24 @@
-diff --git a/Makefile b/Makefile
-index f46329b..fb0ca57 100644
---- a/Makefile
-+++ b/Makefile
-@@ -120,22 +120,24 @@ LDLIBS   := $(LDLIBS)
+diff -u -r -N a/Makefile b/Makefile
+--- a/Makefile	2018-05-09 15:19:59.135342127 -0400
++++ b/Makefile	2018-05-09 15:20:54.392850405 -0400
+@@ -120,13 +120,15 @@
  LIB_CPPFLAGS       = -DNV_LINUX -isystem $(CUDA_DIR)/include -isystem $(DEPS_DIR)$(includedir) -include $(BUILD_DEFS)
  LIB_CFLAGS         = -fPIC
  LIB_LDFLAGS        = -L$(DEPS_DIR)$(libdir) -shared -Wl,-soname=$(LIB_SONAME)
 -LIB_LDLIBS_STATIC  = -l:libnvidia-modprobe-utils.a
 +LIB_LDLIBS_UTILS   = -l:libnvidia-modprobe-utils.a
++LIB_LDLIBS_STATIC  =
  LIB_LDLIBS_SHARED  = -ldl -lcap
  ifeq ($(WITH_LIBELF), yes)
  LIB_CPPFLAGS       += -DWITH_LIBELF
  LIB_LDLIBS_SHARED  += -lelf
  else
-+LIB_LDLIBS_SHARED  += -l:libelf.a
  LIB_LDLIBS_STATIC  += -l:libelf.a
++LIB_LDLIBS_SHARED  += -l:libelf.a
  endif
  ifeq ($(WITH_TIRPC), yes)
--LIB_CPPFLAGS       += -isystem $(DEPS_DIR)$(includedir)/tirpc -DWITH_TIRPC
-+LIB_CPPFLAGS       += -DWITH_TIRPC
-+LIB_LDLIBS_SHARED  += -ltirpc -lpthread
- LIB_LDLIBS_STATIC  += -l:libtirpc.a
--LIB_LDLIBS_SHARED  += -lpthread
- endif
- ifeq ($(WITH_SECCOMP), yes)
- LIB_CPPFLAGS       += -DWITH_SECCOMP
- LIB_LDLIBS_SHARED  += -lseccomp
-+LIB_LDLIBS_STATIC  += -l:libseccomp.a
- endif
- LIB_CPPFLAGS       += $(CPPFLAGS)
- LIB_CFLAGS         += $(CFLAGS)
-@@ -183,21 +185,18 @@ $(BIN_OBJS): %.o: %.c | shared
+ LIB_CPPFLAGS       += -isystem $(DEPS_DIR)$(includedir)/tirpc -DWITH_TIRPC
+@@ -183,21 +185,18 @@
  
  $(LIB_SHARED): $(LIB_OBJS)
  	$(MKDIR) -p $(DEBUG_DIR)
@@ -54,13 +42,20 @@ index f46329b..fb0ca57 100644
  
  ##### Public rules #####
  
-@@ -222,9 +221,6 @@ deps: $(LIB_RPC_SRCS) $(BUILD_DEFS)
- ifeq ($(WITH_LIBELF), no)
- 	$(MAKE) -f $(MAKE_DIR)/elftoolchain.mk install
- endif
--ifeq ($(WITH_TIRPC), yes)
--	$(MAKE) -f $(MAKE_DIR)/libtirpc.mk install
--endif
+Binary files a/.Makefile.swp and b/.Makefile.swp differ
+Binary files a/mk/.elftoolchain.mk.swp and b/mk/.elftoolchain.mk.swp differ
+diff -u -r -N a/mk/libtirpc.mk b/mk/libtirpc.mk
+--- a/mk/libtirpc.mk	2018-04-26 18:41:12.000000000 -0400
++++ b/mk/libtirpc.mk	2018-05-09 15:25:09.827241129 -0400
+@@ -39,8 +39,8 @@
  
+ unexport DESTDIR
  install: all
- 	$(INSTALL) -d -m 755 $(addprefix $(DESTDIR),$(includedir) $(bindir) $(libdir) $(docdir) $(libdbgdir) $(pkgconfdir))
+-	$(MAKE) -C $(SRCS_DIR) install
++	$(BMAKE) -C $(SRCS_DIR) install INCSDIR=$(INCSDIR) DESTDIR=$(DESTDIR)
+ 
+ clean:
+ 	$(RM) $(SRCS_DIR)/.build_stamp
+-	$(MAKE) -C $(SRCS_DIR) clean
++	$(BMAKE) -C $(SRCS_DIR) clean
+Binary files a/mk/.libtirpc.mk.swp and b/mk/.libtirpc.mk.swp differ
