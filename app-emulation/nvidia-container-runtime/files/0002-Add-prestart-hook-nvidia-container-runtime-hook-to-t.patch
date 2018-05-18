@@ -1,15 +1,15 @@
-diff -u -r -N x/src/github.com/opencontainers/runc/utils.go y/src/github.com/opencontainers/runc/utils.go
---- x/src/github.com/opencontainers/runc/utils.go	2018-05-09 07:46:27.433225884 -0400
-+++ y/src/github.com/opencontainers/runc/utils.go	2018-05-09 07:52:53.746771038 -0400
+diff -u -r -N a/src/github.com/opencontainers/runc/utils.go b/src/github.com/opencontainers/runc/utils.go
+--- a/src/github.com/opencontainers/runc/utils.go	2018-05-18 07:17:54.355516353 -0400
++++ b/src/github.com/opencontainers/runc/utils.go	2018-05-18 07:18:50.298088812 -0400
 @@ -3,6 +3,7 @@
  import (
  	"fmt"
  	"os"
-+    "os/exec"
++	"os/exec"
  	"path/filepath"
  
  	"github.com/opencontainers/runtime-spec/specs-go"
-@@ -52,6 +53,23 @@
+@@ -52,6 +53,26 @@
  	os.Exit(1)
  }
  
@@ -22,6 +22,9 @@ diff -u -r -N x/src/github.com/opencontainers/runc/utils.go y/src/github.com/ope
 +	if context.GlobalBool("debug") {
 +		args = append(args, "-debug")
 +	}
++	if spec.Hooks == nil {
++		spec.Hooks = new(specs.Hooks)
++	}
 +	spec.Hooks.Prestart = append(spec.Hooks.Prestart, specs.Hook{
 +		Path: path,
 +		Args: append(args, "prestart"),
@@ -33,7 +36,7 @@ diff -u -r -N x/src/github.com/opencontainers/runc/utils.go y/src/github.com/ope
  // setupSpec performs initial setup based on the cli.Context for the container
  func setupSpec(context *cli.Context) (*specs.Spec, error) {
  	bundle := context.String("bundle")
-@@ -64,6 +82,10 @@
+@@ -64,6 +85,10 @@
  	if err != nil {
  		return nil, err
  	}
