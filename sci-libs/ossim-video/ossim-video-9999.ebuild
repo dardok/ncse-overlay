@@ -1,1 +1,1 @@
-ossim-video-2.3.0.ebuild
+ossim-video-2.3.2.ebuild

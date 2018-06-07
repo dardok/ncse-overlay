@@ -1,1 +1,1 @@
-ossim-2.3.0.ebuild
+ossim-2.3.2.ebuild
