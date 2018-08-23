@@ -9,14 +9,25 @@ SRC_URI="https://github.com/thrust/thrust/archive/${COMMIT_ID}.tar.gz -> ${P}.ta
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 S=${WORKDIR}/${PN}-${COMMIT_ID}
 DEPEND=""
 RDEPEND="${DEPEND} dev-util/nvidia-cuda-sdk"
 
+src_prepare() {
+	install -d ${T}/include
+	mv ${S}/${PN}/* ${T}/include
+	rm -rf ${S}/thrust
+	default
+}
+
 src_install() {
-        dodir /usr/include/${PN}
-        insinto /usr/include/${PN}
-        doins -r *
+	dodir /usr/src/trees/dev-compute/thrust-${PV}
+	insinto /usr/src/trees/dev-compute/thrust-${PV}
+	doins -r *
+
+	dodir /usr/include/${PN}
+	insinto /usr/include/${PN}
+	doins -r ${T}/include/*
 }
