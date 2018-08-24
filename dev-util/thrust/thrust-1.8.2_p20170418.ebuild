@@ -23,8 +23,8 @@ src_prepare() {
 }
 
 src_install() {
-	dodir /usr/src/trees/dev-compute/thrust-${PV}
-	insinto /usr/src/trees/dev-compute/thrust-${PV}
+	dodir /usr/src/trees/dev-util/thrust-${PV}
+	insinto /usr/src/trees/dev-util/thrust-${PV}
 	doins -r *
 
 	dodir /usr/include/${PN}
